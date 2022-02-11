@@ -9,26 +9,39 @@
         <h1>Datos del estudiante</h1>
         <a th:href="@{/}">Regresar...</a>
         <br/>
-            <form th:action="@{/guardar}" method="post" th:object="${estudiante}">
-                <input type="hidden" name="id" th:field="*{id}"/>
-                <br/>
-                <label for="nombre">Nombre:</label>
-                <input type="text" name="nombre" minlength="0" maxlength="20" size="20" th:field="*{nombre}"/>
-                <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error en nombre</span>
-                <br/>
-                <label for="apellido">Apellido:</label>
-                <input type="text" name="apellido" minlength="0" maxlength="20" size="20" th:field="*{apellido}"/>
-                <span th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}">Error en apellido</span>
-                <br/>
-                <label for="identificacion">Identificaci&oacute;n:</label>
-                <input type="number" name="identificacion" min="1" maxlength="10" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" th:field="*{identificacion}"/>
-                <span th:if="${#fields.hasErrors('identificacion')}" th:errors="*{identificacion}">Error en identificacion</span>
-                <br/>
-                <label for="edad">Edad:</label>
-                <input type="number" name="edad"  min="0" maxlength="2" oninput="if(this.value.length > this.maxLength || this.value.length < this.minLength) this.value = this.value.slice(0, this.maxLength);" th:field="*{edad}"/>
-                <span th:if="${#fields.hasErrors('edad')}" th:errors="*{edad}">Error en edad</span>
-                <br/>
-                <input type="submit" name="guardar" value="Guardar">
-            </form>
+        <form th:action="@{/guardar}" method="post" th:object="${estudiante}">
+            <input type="hidden" name="id" th:field="*{id}"/>
+            <br/>
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" minlength="0" maxlength="20" size="20" th:field="*{nombre}"/>
+            <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error en nombre</span>
+            <br/>
+            <label for="apellido">Apellido:</label>
+            <input type="text" name="apellido" minlength="0" maxlength="20" size="20" th:field="*{apellido}"/>
+            <span th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}">Error en apellido</span>
+            <br/>
+            <label for="identificacion">Identificaci&oacute;n:</label>
+            <input type="number" name="identificacion" min="1" maxlength="10" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" th:field="*{identificacion}"/>
+            <span th:if="${#fields.hasErrors('identificacion')}" th:errors="*{identificacion}">Error en identificacion</span>
+            <br/>
+            <label for="edad">Edad:</label>
+            <input type="number" name="edad"  min="0" maxlength="2" oninput="if(this.value.length > this.maxLength || this.value.length < this.minLength) this.value = this.value.slice(0, this.maxLength);" th:field="*{edad}"/>
+            <span th:if="${#fields.hasErrors('edad')}" th:errors="*{edad}">Error en edad</span>
+            <br/>
+            <label for="casa_id">Casa:</label>
+            <span th:if="${casas != null && !casas.empty}">
+                <select th:field="*{casa_id}">
+                    <option th:each="casa : ${casas}" th:value="${casa.id}" th:text="${casa.nombre}">
+                    </option>
+                </select>
+            </span>
+            <span th:if="${estudiantes == null || estudiantes.empty}">
+                <select name="casa_id" th:if="${casas == null || casas.empty}">
+                    <option value="0">--Seleccione Casa--</option>
+                </select>
+            </span>
+            <br/>
+            <input type="submit" name="guardar" value="Guardar">
+        </form>
     </body>
 </html>

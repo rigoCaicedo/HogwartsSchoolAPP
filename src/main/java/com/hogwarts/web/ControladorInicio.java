@@ -1,7 +1,10 @@
 package com.hogwarts.web;
 
+import com.hogwarts.domain.Casa;
 import com.hogwarts.domain.Estudiante;
+import com.hogwarts.servicio.CasaService;
 import com.hogwarts.servicio.EstudianteService;
+import java.util.List;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,9 @@ public class ControladorInicio {
 
     @Autowired
     private EstudianteService estudianteService;
+    
+    @Autowired
+    private CasaService casaService;
 
     @GetMapping("/")
     public String inicio(Model model) {
@@ -27,7 +33,10 @@ public class ControladorInicio {
     }
 
     @GetMapping("/agregar")
-    public String agregar(Estudiante estudiante) {
+    public String agregar(Estudiante estudiante,Model model) {
+        List<Casa>casas=casaService.listarCasas();
+        
+        model.addAttribute("casas", casas);
         return "modificar";
     }
 
@@ -43,7 +52,9 @@ public class ControladorInicio {
     @GetMapping("/editar/{id}")
     public String editar(Estudiante estudiante, Model model) {
         estudiante = estudianteService.encontrarEstudiante(estudiante);
+        List<Casa>casas=casaService.listarCasas();
         model.addAttribute("estudiante", estudiante);
+        model.addAttribute("casas", casas);
         return "modificar";
     }
 
