@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Inicio</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <h1>Inicio</h1>
+        <a th:href="@{/agregar}">Crear persona...</a>
+        <div th:if="${estudiantes != null && !estudiantes.empty}">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Identificaci&oacute;n</th>
+                        <th>edad</th>
+                        <th>editar</th>
+                        <th>eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="estudiante : ${estudiantes}">
+                        <td th:text="${estudiante.nombre}">Mostrar nombre</td>
+                        <td th:text="${estudiante.apellido}">mostrar Apellido</td>
+                        <td th:text="${estudiante.identificacion}">mostrar Email</td>
+                        <td th:text="${estudiante.edad}">mostrar Telefono</td>
+                        <td><a th:href="@{/editar/}+${estudiante.id}">Editar</a></td>
+                        <td><a th:href="@{/eliminar/}+${estudiante.id}">Eliminar</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:if="${estudiantes == null || estudiantes.empty}">
+            La lista de estudiantes está vacia
+        </div>
+    </body>
+</html>
